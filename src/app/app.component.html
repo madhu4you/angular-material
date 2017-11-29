@@ -1,0 +1,22 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<header class="mat-elevation-z6">
+<mat-toolbar color="primary">
+  <button id="toggle-menu-button" class="mat-icon-button" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Angular Material Example</span>
+</mat-toolbar>
+</header>
+<mat-sidenav-container class="sidenav-container">
+  <div class="mat-drawer-backdrop"></div>
+  <mat-sidenav class="sidenav mat-elevation-z6" mode="side" opened="true">
+    <nav>
+      <ul>
+        <li><a routerLink="/"><mat-icon class="mat-icon-button circular-label">Se</mat-icon>Search</a></li>
+        <li><a routerLink="/create"><mat-icon class="mat-icon-button circular-label">Cr</mat-icon>Create</a></li>
+        <li><a routerLink="/status"><mat-icon class="mat-icon-button circular-label">St</mat-icon>Status</a></li>
+      </ul>
+    </nav>
+  </mat-sidenav>
+  <router-outlet></router-outlet>
+</mat-sidenav-container>

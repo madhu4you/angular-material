@@ -1,0 +1,106 @@
+<mat-toolbar class="mat-elevation-z6 ">
+  <div class="docs-primary-header component-page-header">
+    <h1>Create Contact</h1>
+  </div>
+</mat-toolbar>
+<section class="contactapp">
+<mat-card>
+   <form [formGroup]="createForm" id="createForm" novalidate>
+     <mat-form-field>
+       <mat-select placeholder="Title" formControlName="title">
+            <mat-option *ngFor="let val of titles" [value]="val">{{val}}</mat-option>
+       </mat-select>
+       <mat-error *ngIf="createForm.controls.title.hasError('required')">
+         Title is
+         <strong>required</strong>
+       </mat-error>
+     </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Name" formControlName="name">
+      <mat-error *ngIf="createForm.controls.name.hasError('required')">
+        Name is
+        <strong>required</strong>.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="tel" matInput placeholder="Phone" formControlName="phone">
+      <mat-error *ngIf="createForm.controls.phone.hasError('minlength') && createForm.controls.phone.hasError('maxlength')">
+        Phone should be
+        <strong>10</strong> digit number.
+      </mat-error>
+      <mat-error *ngIf="createForm.controls.phone.hasError('required')">
+        Phone is
+        <strong>required</strong>.
+      </mat-error>
+    </mat-form-field>
+     <mat-form-field>
+       <input matInput placeholder="Email" formControlName="email">
+       <mat-error *ngIf="createForm.controls.email.hasError('required')">
+         Email is
+         <strong>required</strong>.
+       </mat-error>
+       <mat-error *ngIf="createForm.controls.email.hasError('pattern')">
+         Please enter a valid email address.
+       </mat-error>
+     </mat-form-field>
+  </form>
+  <mat-action-row>
+    <button type="submit" mat-raised-button color="primary" (click)="addContact(); createForm.reset()" [disabled]="!createForm.valid">Save</button>
+    <button mat-raised-button (click)="newFormContact(); createForm.reset()" color="secondary" >Cancel</button>
+  </mat-action-row>
+
+  <section class="main" *ngIf="contacts !=null && contacts.length > 0">
+    <div class="example-container">
+      <mat-table #table [dataSource]="dataSource">
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+
+        <!-- Phone Column -->
+        <ng-container matColumnDef="phone">
+          <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.phone}} </mat-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <!--
+            <a mat-icon-button [routerLink]="element.routerLink" [queryParams]="{ 'edit': true }">
+              <mat-icon fontSet="fa" fontIcon="fa-pencil-square-o"></mat-icon>
+            </a>
+            -->
+            <a mat-icon-button (click)="deleteContact(element)">
+              <mat-icon>delete</mat-icon>
+            </a>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <mat-paginator #paginator
+                     [pageSize]="10"
+                     [pageSizeOptions]="[5, 10, 20]">
+      </mat-paginator>
+    </div>
+  </section>
+</mat-card>
+</section>
